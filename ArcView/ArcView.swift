@@ -41,6 +41,17 @@ class ArcView: UIView {
             setNeedsDisplay()
         }
     }
+    @IBInspectable var dashPhase: CGFloat = 0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    @IBInspectable var dashLength: CGFloat = 0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
 
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -70,9 +81,14 @@ class ArcView: UIView {
             }
             
             context.setLineWidth(lineWidth)
+            context.setLineDash(phase: dashPhase, lengths: [dashLength])
             context.addPath(path.cgPath)
             context.strokePath()
         }
+    }
+    
+    func callback() {
+        
     }
 
 }
