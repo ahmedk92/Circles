@@ -15,9 +15,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        
-//        arcView.arcs = Array(stride(from: 0, to: 360, by: 45)).map({ ($0 + 10, $0 + 35) })
     }
 
     override func didReceiveMemoryWarning() {

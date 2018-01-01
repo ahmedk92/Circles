@@ -11,14 +11,32 @@ import UIKit
 @IBDesignable
 class ArcView: UIView {
     
-    @IBInspectable var color: UIColor = .black
-    @IBInspectable var stops: Int = 0
-    @IBInspectable var gapFactor: CGFloat = 0
-    @IBInspectable var shift: CGFloat = 0
-    /**
-     In degrees.
-    */
-    var arcs: [(startAngle: CGFloat, endAngle: CGFloat)] = [] {
+    @IBInspectable var color: UIColor = .black {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    @IBInspectable var stops: Int = 0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    @IBInspectable var gapFactor: CGFloat = 0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    @IBInspectable var shift: CGFloat = 0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    @IBInspectable var radiusFactor: CGFloat = 1 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    @IBInspectable var lineWidth: CGFloat = 1 {
         didSet {
             setNeedsDisplay()
         }
@@ -32,7 +50,7 @@ class ArcView: UIView {
         super.draw(rect)
         
         let innerCenter = CGPoint.init(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
-        let radius = min(innerCenter.x, innerCenter.y) * 0.9
+        let radius = min(innerCenter.x, innerCenter.y) * radiusFactor
         
         if let context = UIGraphicsGetCurrentContext() {
             context.clear(rect)
@@ -51,6 +69,7 @@ class ArcView: UIView {
                 path.append(bezierPath)
             }
             
+            context.setLineWidth(lineWidth)
             context.addPath(path.cgPath)
             context.strokePath()
         }
