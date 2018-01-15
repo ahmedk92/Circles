@@ -52,6 +52,15 @@ class ArcView: UIView {
             setNeedsDisplay()
         }
     }
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        for subview in subviews {
+            if !subview.isHidden && subview.isUserInteractionEnabled && subview.point(inside: convert(point, to: subview), with: event) {
+                return true
+            }
+        }
+        return false
+    }
 
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -73,7 +82,7 @@ class ArcView: UIView {
             
             let path = UIBezierPath()
             
-            let step: CGFloat = stops > 0 ? CGFloat(360 / stops) : 0
+            let step: CGFloat = stops > 0 ? CGFloat(360 / stops) : 1
             for angle: CGFloat in stride(from: 0, to: 360, by: step) {
                 let gap = step * gapFactor
                 let bezierPath = UIBezierPath.init(arcCenter: innerCenter, radius: radius, startAngle: (angle + gap - shift).degreesToRadians, endAngle: (angle + step - gap - shift).degreesToRadians, clockwise: true)
@@ -81,7 +90,9 @@ class ArcView: UIView {
             }
             
             context.setLineWidth(lineWidth)
-            context.setLineDash(phase: dashPhase, lengths: [dashLength])
+            if dashLength > 0 {
+                context.setLineDash(phase: dashPhase, lengths: [dashLength])
+            }
             context.addPath(path.cgPath)
             context.strokePath()
         }
