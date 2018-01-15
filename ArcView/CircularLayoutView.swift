@@ -46,7 +46,7 @@ class CircularLayoutView: UIView {
             return
         }
         
-        let radius = min(center.x, center.y) * radiusFactor
+        let radius = min(frame.size.width / 2, frame.size.height / 2) * radiusFactor
         let step: CGFloat = CGFloat(360 / subviews.count)
         for i in stride(from: 0, to: subviews.count, by: 1) {
             let angle = CGFloat(i) * step - shift
