@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B6348B241FFA20F200A83273 /* CircularLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6348B231FFA20F200A83273 /* CircularLayoutView.swift */; };
+		B6923402205ACC53006E1C44 /* ViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6923401205ACC53006E1C44 /* ViewController2.swift */; };
 		B6E6F34C1FF924620023F1AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6F34B1FF924620023F1AA /* AppDelegate.swift */; };
 		B6E6F34E1FF924620023F1AA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6F34D1FF924620023F1AA /* ViewController.swift */; };
 		B6E6F3511FF924620023F1AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6E6F34F1FF924620023F1AA /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		B6348B231FFA20F200A83273 /* CircularLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularLayoutView.swift; sourceTree = "<group>"; };
+		B6923401205ACC53006E1C44 /* ViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController2.swift; sourceTree = "<group>"; };
 		B6E6F3481FF924620023F1AA /* ArcView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArcView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E6F34B1FF924620023F1AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B6E6F34D1FF924620023F1AA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				B6E6F3571FF924620023F1AA /* Info.plist */,
 				B6E6F36B1FF9247C0023F1AA /* ArcView.swift */,
 				B6348B231FFA20F200A83273 /* CircularLayoutView.swift */,
+				B6923401205ACC53006E1C44 /* ViewController2.swift */,
 			);
 			path = ArcView;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6923402205ACC53006E1C44 /* ViewController2.swift in Sources */,
 				B6E6F36C1FF9247C0023F1AA /* ArcView.swift in Sources */,
 				B6348B241FFA20F200A83273 /* CircularLayoutView.swift in Sources */,
 				B6E6F34E1FF924620023F1AA /* ViewController.swift in Sources */,

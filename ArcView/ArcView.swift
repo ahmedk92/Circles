@@ -8,6 +8,57 @@
 
 import UIKit
 
+class SectorsView: UIView {
+    var colors: [UIColor] = []
+    var radiusFactor: CGFloat = 0.8
+    var barWidth: CGFloat = 100
+    
+    // Only override draw() if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func draw(_ rect: CGRect) {
+        // Drawing code
+        
+        super.draw(rect)
+        
+        let innerCenter = CGPoint.init(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
+        let radius = min(innerCenter.x, innerCenter.y) * radiusFactor
+        
+        if let context = UIGraphicsGetCurrentContext() {
+            context.clear(rect)
+            
+            context.setFillColor((self.backgroundColor ?? .clear).cgColor)
+            context.fill(self.bounds)
+            
+            let step = (360.0 / CGFloat(colors.count))
+            for i in 0..<colors.count {
+                let angle = step * CGFloat(i)
+                
+                let point1 = CGPoint.init(x: (radius - barWidth) * cos(angle.degreesToRadians), y: (radius - barWidth) *
+                    sin(angle.degreesToRadians))
+                let point2 = CGPoint.init(x: (radius) * cos(angle.degreesToRadians), y: (radius) *
+                    sin(angle.degreesToRadians))
+                
+                let point4 = CGPoint.init(x: (radius - barWidth) * cos((angle + step).degreesToRadians), y: (radius - barWidth) *
+                    sin((angle + step).degreesToRadians))
+                
+                
+                let path = UIBezierPath.init()
+                path.move(to: point1.applying(.init(translationX: center.x, y: center.y)))
+                path.addLine(to: point2.applying(.init(translationX: center.x, y: center.y)))
+                path.addArc(withCenter: innerCenter, radius: radius, startAngle: angle.degreesToRadians, endAngle: (angle + step).degreesToRadians, clockwise: true)
+                path.addLine(to: point4.applying(.init(translationX: center.x, y: center.y)))
+                path.addArc(withCenter: innerCenter, radius: radius - barWidth, startAngle: (angle + step).degreesToRadians, endAngle: angle.degreesToRadians, clockwise: false)
+                path.close()
+                
+                context.addPath(path.cgPath)
+                context.setFillColor(colors[i % colors.count].cgColor)
+                context.fillPath()
+            }
+            
+        }
+    }
+}
+
 @IBDesignable
 class ArcView: UIView {
     

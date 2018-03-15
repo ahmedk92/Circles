@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="q0H-1x-oKE">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -225,6 +225,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="24.800000000000001" y="30.134932533733135"/>
+        </scene>
+        <!--View Controller2-->
+        <scene sceneID="27J-sm-CWA">
+            <objects>
+                <viewController id="q0H-1x-oKE" customClass="ViewController2" customModule="ArcView" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MMw-rv-oyH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WXE-la-Ntn" customClass="SectorsView" customModule="ArcView" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HVv-HY-k3T" firstAttribute="bottom" secondItem="WXE-la-Ntn" secondAttribute="bottom" id="EHm-9m-p0I"/>
+                            <constraint firstItem="HVv-HY-k3T" firstAttribute="trailing" secondItem="WXE-la-Ntn" secondAttribute="trailing" id="IMU-eo-P3U"/>
+                            <constraint firstItem="WXE-la-Ntn" firstAttribute="leading" secondItem="HVv-HY-k3T" secondAttribute="leading" id="J2j-h1-HZl"/>
+                            <constraint firstItem="WXE-la-Ntn" firstAttribute="top" secondItem="HVv-HY-k3T" secondAttribute="top" id="jbt-KA-8bx"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="HVv-HY-k3T"/>
+                    </view>
+                    <connections>
+                        <outlet property="sectorsView" destination="WXE-la-Ntn" id="TIo-Rq-AQa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lla-SZ-zd5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="984" y="-257"/>
         </scene>
     </scenes>
 </document>
