@@ -17,7 +17,7 @@ class ViewController2: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        sectorsView.colors = [UIColor.red, .green, .blue]
+        sectorsView.colors = [UIColor.red, .green, .blue, .orange]
     }
 
     override func didReceiveMemoryWarning() {

@@ -43,10 +43,10 @@ class SectorsView: UIView {
                 
                 
                 let path = UIBezierPath.init()
-                path.move(to: point1.applying(.init(translationX: center.x, y: center.y)))
-                path.addLine(to: point2.applying(.init(translationX: center.x, y: center.y)))
+                path.move(to: point1.applying(.init(translationX: innerCenter.x, y: innerCenter.y)))
+                path.addLine(to: point2.applying(.init(translationX: innerCenter.x, y: innerCenter.y)))
                 path.addArc(withCenter: innerCenter, radius: radius, startAngle: angle.degreesToRadians, endAngle: (angle + step).degreesToRadians, clockwise: true)
-                path.addLine(to: point4.applying(.init(translationX: center.x, y: center.y)))
+                path.addLine(to: point4.applying(.init(translationX: innerCenter.x, y: innerCenter.y)))
                 path.addArc(withCenter: innerCenter, radius: radius - barWidth, startAngle: (angle + step).degreesToRadians, endAngle: angle.degreesToRadians, clockwise: false)
                 path.close()
                 
