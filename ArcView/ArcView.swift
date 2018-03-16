@@ -17,9 +17,39 @@ protocol SectorsViewDataSource: class {
     func innerRadiusFactor(inSectorsView sectorsView: SectorsView) -> CGFloat
 }
 
+protocol SectorsViewDelegate: class {
+    func sectorsView(_ sectorsView: SectorsView, didSelectSectorAtIndex index: Int)
+}
+
 class SectorsView: UIView {
     
     weak var dataSource: SectorsViewDataSource?
+    weak var delegate: SectorsViewDelegate?
+    
+    private var paths: [Int: UIBezierPath] = [:]
+    private lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+        let tgr = UITapGestureRecognizer.init(target: self, action: #selector(tapped(_:)))
+        return tgr
+    }()
+    
+    @objc private func tapped(_ recognizer: UITapGestureRecognizer) {
+        for (i, path) in paths {
+            if path.contains(recognizer.location(in: self)) {
+                delegate?.sectorsView(self, didSelectSectorAtIndex: i)
+            }
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        setNeedsDisplay()
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        addGestureRecognizer(tapGestureRecognizer)
+    }
     
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -61,6 +91,8 @@ class SectorsView: UIView {
                 path.addLine(to: point4.applying(.init(translationX: innerCenter.x, y: innerCenter.y)))
                 path.addArc(withCenter: innerCenter, radius: innerRadius, startAngle: (angle + step).degreesToRadians, endAngle: angle.degreesToRadians, clockwise: false)
                 path.close()
+                
+                paths[i] = path
                 
                 context.addPath(path.cgPath)
                 context.setFillColor(dataSource.sectorsView(self, fillColorForSectorAtIndex: i))

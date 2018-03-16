@@ -20,6 +20,7 @@ class ViewController2: UIViewController {
 
         // Do any additional setup after loading the view.
         sectorsView.dataSource = self
+        sectorsView.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,6 +65,15 @@ extension ViewController2: SectorsViewDataSource {
     
     func innerRadiusFactor(inSectorsView sectorsView: SectorsView) -> CGFloat {
         return 0.0
+    }
+    
+    
+}
+
+// MARL: - SectorsViewDelegate
+extension ViewController2: SectorsViewDelegate {
+    func sectorsView(_ sectorsView: SectorsView, didSelectSectorAtIndex index: Int) {
+        print(index)
     }
     
     
