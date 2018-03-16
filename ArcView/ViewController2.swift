@@ -11,13 +11,15 @@ import UIKit
 class ViewController2: UIViewController {
     
     @IBOutlet weak var sectorsView: SectorsView!
+    
+    var colors = [UIColor.red, .green, .blue, .yellow, .orange, .purple]
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        sectorsView.colors = [UIColor.red, .green, .blue, .orange]
+        sectorsView.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,4 +38,33 @@ class ViewController2: UIViewController {
     }
     */
 
+}
+
+// MARK: - SectorsViewDataSource
+extension ViewController2: SectorsViewDataSource {
+    func numberOfSectors(inSectorsView sectorsView: SectorsView) -> Int {
+        return 10
+    }
+    
+    func sectorsView(_ sectorsView: SectorsView, fillColorForSectorAtIndex index: Int) -> CGColor {
+        return colors[index % colors.count].cgColor
+    }
+    
+    func sectorsView(_ sectorsView: SectorsView, strokeColorForSectorAtIndex index: Int) -> CGColor {
+        return UIColor.black.cgColor
+    }
+    
+    func sectorsView(_ sectorsView: SectorsView, strokeWidthForSectorAtIndex index: Int) -> CGFloat {
+        return 0.5
+    }
+    
+    func outerRadiusFactor(inSectorsView sectorsView: SectorsView) -> CGFloat {
+        return 0.9
+    }
+    
+    func innerRadiusFactor(inSectorsView sectorsView: SectorsView) -> CGFloat {
+        return 0.0
+    }
+    
+    
 }

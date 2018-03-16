@@ -8,10 +8,18 @@
 
 import UIKit
 
+protocol SectorsViewDataSource: class {
+    func numberOfSectors(inSectorsView sectorsView: SectorsView) -> Int
+    func sectorsView(_ sectorsView: SectorsView, fillColorForSectorAtIndex index: Int) -> CGColor
+    func sectorsView(_ sectorsView: SectorsView, strokeColorForSectorAtIndex index: Int) -> CGColor
+    func sectorsView(_ sectorsView: SectorsView, strokeWidthForSectorAtIndex index: Int) -> CGFloat
+    func outerRadiusFactor(inSectorsView sectorsView: SectorsView) -> CGFloat
+    func innerRadiusFactor(inSectorsView sectorsView: SectorsView) -> CGFloat
+}
+
 class SectorsView: UIView {
-    var colors: [UIColor] = []
-    var radiusFactor: CGFloat = 0.8
-    var barWidth: CGFloat = 100
+    
+    weak var dataSource: SectorsViewDataSource?
     
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -20,8 +28,12 @@ class SectorsView: UIView {
         
         super.draw(rect)
         
+        guard let dataSource = dataSource else { return }
+        
+        
         let innerCenter = CGPoint.init(x: self.bounds.size.width / 2, y: self.bounds.size.height / 2)
-        let radius = min(innerCenter.x, innerCenter.y) * radiusFactor
+        let outerRadius = min(innerCenter.x, innerCenter.y) * dataSource.outerRadiusFactor(inSectorsView: self)
+        let innerRadius = min(innerCenter.x, innerCenter.y) * dataSource.innerRadiusFactor(inSectorsView: self)
         
         if let context = UIGraphicsGetCurrentContext() {
             context.clear(rect)
@@ -29,30 +41,35 @@ class SectorsView: UIView {
             context.setFillColor((self.backgroundColor ?? .clear).cgColor)
             context.fill(self.bounds)
             
-            let step = (360.0 / CGFloat(colors.count))
-            for i in 0..<colors.count {
+            let step = (360.0 / CGFloat(dataSource.numberOfSectors(inSectorsView: self)))
+            for i in 0..<dataSource.numberOfSectors(inSectorsView: self) {
                 let angle = step * CGFloat(i)
                 
-                let point1 = CGPoint.init(x: (radius - barWidth) * cos(angle.degreesToRadians), y: (radius - barWidth) *
+                let point1 = CGPoint.init(x: (innerRadius) * cos(angle.degreesToRadians), y: (innerRadius) *
                     sin(angle.degreesToRadians))
-                let point2 = CGPoint.init(x: (radius) * cos(angle.degreesToRadians), y: (radius) *
+                let point2 = CGPoint.init(x: (outerRadius) * cos(angle.degreesToRadians), y: (outerRadius) *
                     sin(angle.degreesToRadians))
                 
-                let point4 = CGPoint.init(x: (radius - barWidth) * cos((angle + step).degreesToRadians), y: (radius - barWidth) *
+                let point4 = CGPoint.init(x: (innerRadius) * cos((angle + step).degreesToRadians), y: (innerRadius) *
                     sin((angle + step).degreesToRadians))
                 
                 
                 let path = UIBezierPath.init()
                 path.move(to: point1.applying(.init(translationX: innerCenter.x, y: innerCenter.y)))
                 path.addLine(to: point2.applying(.init(translationX: innerCenter.x, y: innerCenter.y)))
-                path.addArc(withCenter: innerCenter, radius: radius, startAngle: angle.degreesToRadians, endAngle: (angle + step).degreesToRadians, clockwise: true)
+                path.addArc(withCenter: innerCenter, radius: outerRadius, startAngle: angle.degreesToRadians, endAngle: (angle + step).degreesToRadians, clockwise: true)
                 path.addLine(to: point4.applying(.init(translationX: innerCenter.x, y: innerCenter.y)))
-                path.addArc(withCenter: innerCenter, radius: radius - barWidth, startAngle: (angle + step).degreesToRadians, endAngle: angle.degreesToRadians, clockwise: false)
+                path.addArc(withCenter: innerCenter, radius: innerRadius, startAngle: (angle + step).degreesToRadians, endAngle: angle.degreesToRadians, clockwise: false)
                 path.close()
                 
                 context.addPath(path.cgPath)
-                context.setFillColor(colors[i % colors.count].cgColor)
+                context.setFillColor(dataSource.sectorsView(self, fillColorForSectorAtIndex: i))
                 context.fillPath()
+                
+                context.addPath(path.cgPath)
+                context.setStrokeColor(dataSource.sectorsView(self, strokeColorForSectorAtIndex: i))
+                context.setLineWidth(dataSource.sectorsView(self, strokeWidthForSectorAtIndex: i))
+                context.strokePath()
             }
             
         }
