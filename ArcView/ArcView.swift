@@ -15,6 +15,7 @@ protocol SectorsViewDataSource: class {
     func sectorsView(_ sectorsView: SectorsView, strokeWidthForSectorAtIndex index: Int) -> CGFloat
     func outerRadiusFactor(inSectorsView sectorsView: SectorsView) -> CGFloat
     func innerRadiusFactor(inSectorsView sectorsView: SectorsView) -> CGFloat
+    func shiftAngleInDegrees(inSectorsView sectorsView: SectorsView) -> CGFloat
 }
 
 protocol SectorsViewDelegate: class {
@@ -22,6 +23,10 @@ protocol SectorsViewDelegate: class {
 }
 
 class SectorsView: UIView {
+    
+    func reloadData() {
+        setNeedsDisplay()
+    }
     
     weak var dataSource: SectorsViewDataSource?
     weak var delegate: SectorsViewDelegate?
@@ -73,7 +78,7 @@ class SectorsView: UIView {
             
             let step = (360.0 / CGFloat(dataSource.numberOfSectors(inSectorsView: self)))
             for i in 0..<dataSource.numberOfSectors(inSectorsView: self) {
-                let angle = step * CGFloat(i)
+                let angle = (step * CGFloat(i)) + dataSource.shiftAngleInDegrees(inSectorsView: self)
                 
                 let point1 = CGPoint.init(x: (innerRadius) * cos(angle.degreesToRadians), y: (innerRadius) *
                     sin(angle.degreesToRadians))
