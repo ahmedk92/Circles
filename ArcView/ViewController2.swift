@@ -19,9 +19,9 @@ class ViewController2: UIViewController {
     var colors = [UIColor.red, .green, .blue, .yellow, .orange, .purple]
     
     @objc private func reload() {
-        self.sectorsView.transform = self.sectorsView.transform.rotated(by: CGFloat(-0.5).degreesToRadians)
-        self.innerRadiusFactor += 0.01 * self.sign
-        self.strokeWidthFactor += 0.01 * self.sign
+        self.sectorsView.transform = self.sectorsView.transform.rotated(by: CGFloat(-0.1).degreesToRadians)
+        self.innerRadiusFactor += 0.0025 * self.sign
+        self.strokeWidthFactor += 0.0025 * self.sign
         self.sectorsView.reloadData()
         
         if self.innerRadiusFactor > 1 {
